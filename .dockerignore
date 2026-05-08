@@ -7,7 +7,6 @@ npm-debug.log
 *.txt
 *.md
 docs
-tsconfig.json
 scratch.ts
 test-img.ts
 test.ts
