@@ -1,0 +1,13 @@
+node_modules
+dist
+npm-debug.log
+.git
+.gitignore
+*.png
+*.txt
+*.md
+docs
+tsconfig.json
+scratch.ts
+test-img.ts
+test.ts
