@@ -32,14 +32,25 @@ if [ -z "$(git config user.email)" ]; then
 fi
 
 git add .
-git commit -m "feat: automated deployment and documentation update"
-echo "Pushing to GitHub (may require login)..."
+git commit -m "feat: automated deployment and documentation update" || echo "No changes to commit"
+
+echo "Syncing with remote to avoid conflicts..."
+git pull origin main --rebase --allow-unrelated-histories
+
+echo "Pushing to GitHub..."
 git push -u origin main
 
 # 2. Cloud Run Deployment
 echo "-----------------------------------"
 echo "☁️ Step 2: Deploying to Cloud Run..."
 echo "-----------------------------------"
+
+echo "🔍 Checking GCloud Auth..."
+if ! gcloud auth list --filter=status:ACTIVE --format="value(account)" | grep -q "@"; then
+    echo "❌ No active gcloud account found."
+    echo "Please run: gcloud auth login"
+    exit 1
+fi
 
 # Enable services
 echo "Enabling required GCP services..."
